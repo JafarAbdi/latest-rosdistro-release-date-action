@@ -1,0 +1,24 @@
+name: latest-rosdistro-release-date-action
+description: Get the latest release date for a ros distro
+inputs:
+  rosdistro:
+    description: Name of a ros distro (e.g. melodic, rolling)
+    required: true
+outputs:
+  latest-release-date:
+    description: Latest release date
+    value: ${{ steps.find-rosdistro-release-date.outputs.date }}
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      id: find-rosdistro-release-date
+      run: |
+        latest-release-date() {
+            echo "$(curl -sL "https://api.github.com/repos/ros/rosdistro/tags?per_page=100" \
+            | grep -o "$1/[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}" \
+            | cut -d'/' -f2 \
+            | uniq \
+            | sort -t- -k1n -k2n -k3n -z | head -n 1)"
+        }
+        echo "::set-output name=date::$(latest-release-date "${{ inputs.rosdistro }}")"
