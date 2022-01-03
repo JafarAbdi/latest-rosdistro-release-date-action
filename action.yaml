@@ -5,7 +5,7 @@ inputs:
     description: Name of a ros distro (e.g. melodic, rolling)
     required: true
 outputs:
-  latest-release-date:
+  date:
     description: Latest release date
     value: ${{ steps.find-rosdistro-release-date.outputs.date }}
 runs:
