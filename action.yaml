@@ -21,4 +21,6 @@ runs:
             | uniq \
             | sort -t- -k1n -k2n -k3n -z | head -n 1)"
         }
-        echo "::set-output name=date::$(latest-release-date "${{ inputs.rosdistro }}")"
+        RELEASE_DATE=`latest-release-date ${{ inputs.rosdistro }}`
+        echo "The latest release date for ${{ inputs.rosdistro }} is $RELEASE_DATE"
+        echo "::set-output name=date::${RELEASE_DATE}"
