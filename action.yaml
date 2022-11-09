@@ -23,4 +23,4 @@ runs:
         }
         RELEASE_DATE=`latest-release-date ${{ inputs.rosdistro }}`
         echo "The latest release date for ${{ inputs.rosdistro }} is $RELEASE_DATE"
-        echo "::set-output name=date::${RELEASE_DATE}"
+        echo "date=${RELEASE_DATE}" >> $GITHUB_OUTPUT
